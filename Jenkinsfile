@@ -36,7 +36,7 @@ node {
       repotag = inputConfig['dockerRepository'] + ":${BUILD_NUMBER}"
       docker.withRegistry(inputConfig['dockerRegistryUrl'], inputConfig['dockerCredentials']) {
         app = docker.build(repotag)
-        //app.push()
+        app.push()
       }
     }
 
