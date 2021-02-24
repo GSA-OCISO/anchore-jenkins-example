@@ -6,4 +6,9 @@ This is an example for building a Node application using Jenkins. It includes
 - `Dockerfile` for building the Docker image with the application
 - `Jenkinsfile` that defines the pipeline for the build process and analysis of the Docker image using Anchore plugin
 
-For step by step instructions https://anchore.com/blog/integrating-anchore-scanning-into-jenkins-pipeline-via-jenkinsfile/
+Configure
+
+- Anchore authentication to your Dockerhub repository
+- A pipeline with the provided Github repo
+- Run the pipeline
+- When paused, provide the Dockerhub repository to which the container image will be pushed, Docker credentials, the Anchore endpoint and Anchore credentials.
