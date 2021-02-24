@@ -2,7 +2,8 @@
 FROM node:15.10.0-alpine3.10
 
 #Add a user with userid 8877 and name nonroot
-RUN useradd −u 8877 nonroot
+RUN ln -sf /bin/bash /bin/sh
+RUN useradd -ms /bin/bash  nonroot
 
 #Run Container as nonroot
 USER nonroot
