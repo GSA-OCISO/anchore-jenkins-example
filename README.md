@@ -8,7 +8,7 @@ This is an example for building a Node application using Jenkins. It includes
 
 Configure
 
-- Anchore authentication to your Dockerhub repository
-- A pipeline with the provided Github repo
+- Anchore authentication to your Dockerhub repository as Anchore Registry Credentials
+- A Jenkins pipeline with this Github repo as a source
 - Run the pipeline
 - When paused, provide the Dockerhub repository to which the container image will be pushed, Docker credentials, the Anchore endpoint and Anchore credentials.
