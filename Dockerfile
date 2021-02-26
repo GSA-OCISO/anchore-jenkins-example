@@ -5,8 +5,8 @@ FROM node:15.10.0-alpine3.10
 # RUN yum -y install python3 python3-pip shadow-utils
 # RUN useradd my_user
 # USER my_user
-RUN useradd −u 8877 nonroot
-USER nonroot
+# RUN useradd −u 8877 nonroot
+# USER nonroot
 
 # set a health check
 HEALTHCHECK --interval=5s --timeout=5s CMD curl -f http://127.0.0.1:3000 || exit 1
