@@ -3,8 +3,7 @@ def dockerRegistryHostname = 'docker.io'
 
 stage('Configure') {
     abort = false
-    inputConfig = input id: 'InputConfig', message: 'Docker registry and Anchore Engine configuration', parameters: [ string(defaultValue: '', description: 'Name of the docker repository', name: 'dockerRepository', trim: true), string(defaultValue: '', description: 'Anchore Engine API endpoint', name: 'anchoreEngineUrl', trim: true), credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: '', description: 'Credentials for interacting with Anchore Engine', name: 'anchoreEngineCredentials', required: true)]
-
+    inputConfig = input id: 'InputConfig', message: 'Docker registry and Anchore Engine configuration', parameters: [ string(defaultValue: '', description: 'Name of the docker repository', name: 'dockerRepository', trim: true), credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: '', description: 'Credentials for connecting to the docker registry', name: 'dockerCredentials', required: true), string(defaultValue: '', description: 'Anchore Engine API endpoint', name: 'anchoreEngineUrl', trim: true), credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: '', description: 'Credentials for interacting with Anchore Engine', name: 'anchoreEngineCredentials', required: true)]
     for (config in inputConfig) {
         if (null == config.value || config.value.length() <= 0) {
           echo "${config.key} cannot be left blank"
@@ -37,12 +36,12 @@ node {
     stage('Build') {
       // Build the image and push it to a staging repository
       repotag = inputConfig['dockerRepository'] + ":${BUILD_NUMBER}"
-      withCredentials([string(credentialsId: 'dockerhub-larentis-ottavia', variable: 'DOCKER_CRED')]) {
-          docker.withRegistry(dockerRegistryUrl, ${DOCKER_CRED}) {
-            app = docker.build(repotag)
-            app.push()
-          }
-      }    
+      
+      docker.withRegistry(dockerRegistryUrl, inputConfig['dockerCredentials']) {
+        app = docker.build(repotag)
+        app.push()
+      }
+    
     }
 
     stage('Parallel') {
