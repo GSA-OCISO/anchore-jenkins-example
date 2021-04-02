@@ -58,7 +58,7 @@ node {
       Analyze: {
         //withCredentials([string(credentialsId: 'ecr-repo-arn', variable: 'REGISTRY_ARN')]) {
             writeFile file: anchorefile, text:  dockerRegistryHostname + "/" + repotag + " " + dockerfile
-            anchore name: anchorefile, engineRetries: "1000", engineurl: inputConfig['anchoreEngineUrl'], engineCredentialsId: inputConfig['anchoreEngineCredentials'], annotations: [[key: 'added-by', value: 'jenkins']]
+            anchore name: anchorefile, engineRetries: "1000", engineurl: anchoreEngineUrl, engineCredentialsId: inputConfig['anchoreEngineCredentials'], annotations: [[key: 'added-by', value: 'jenkins']]
         //}
       }
     }
